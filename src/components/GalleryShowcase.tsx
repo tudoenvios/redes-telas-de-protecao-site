@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Camera, MapPin, CheckCircle2, ShieldCheck, ZoomIn, X, MessageCircle, Image as ImageIcon } from 'lucide-react';
+import { Camera, MapPin, CheckCircle2, ShieldCheck, ZoomIn, X, MessageCircle } from 'lucide-react';
 import { REAL_INSTALLATIONS, CONTACT_INFO } from '../data/protectionData';
 import { useImages } from '../context/ImageContext';
 
@@ -8,7 +8,7 @@ interface GalleryShowcaseProps {
 }
 
 export default function GalleryShowcase({ onOpenAdvisor }: GalleryShowcaseProps) {
-  const { galleryImages, setIsManagerOpen } = useImages();
+  const { galleryImages } = useImages();
   const [selectedFilter, setSelectedFilter] = useState<string>('todos');
   const [activeModalImg, setActiveModalImg] = useState<typeof REAL_INSTALLATIONS[0] | null>(null);
 
@@ -41,17 +41,6 @@ export default function GalleryShowcase({ onOpenAdvisor }: GalleryShowcaseProps)
             Acabamento discreto, estética limpa e fixação milimétrica com ganchos em aço inoxidável e cordas de alta tenacidade.
           </p>
 
-          <div className="pt-2">
-            <button
-              type="button"
-              id="btn-trocar-imagens-galeria"
-              onClick={() => setIsManagerOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs shadow-xs hover:scale-105 transition-all cursor-pointer"
-            >
-              <ImageIcon className="w-4 h-4" />
-              <span>Trocar Todas as Imagens do Site</span>
-            </button>
-          </div>
         </div>
 
         {/* Filtros da Galeria */}

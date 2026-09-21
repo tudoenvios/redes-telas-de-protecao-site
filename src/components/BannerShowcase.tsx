@@ -58,7 +58,7 @@ export default function BannerShowcase({ onOpenAdvisor: _onOpenAdvisor }: Banner
   return (
     <div className="w-full max-w-4xl mx-auto space-y-3">
       {/* Barra de Ação Superior: Alternar ou Carregar o Arquivo Original Enviado + Botão para Trocar Todas */}
-      <div className="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 bg-sky-900/10 rounded-xl border border-sky-200/80 text-xs text-sky-950">
+      <div className="hidden">
         <div className="flex items-center gap-2 font-medium">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>
@@ -133,6 +133,7 @@ export default function BannerShowcase({ onOpenAdvisor: _onOpenAdvisor }: Banner
           <img
             src={bannerImage}
             alt="Rede de Proteção para Apartamento - Janelas e Sacadas - Rede & Proteção®"
+            decoding="async"
             className="w-full h-auto object-contain block bg-zinc-950"
           />
 
@@ -216,6 +217,10 @@ export default function BannerShowcase({ onOpenAdvisor: _onOpenAdvisor }: Banner
               <img
                 src="/rede-janela-real.jpg"
                 alt="Janela ampla com rede de proteção instalada e vista panorâmica da cidade"
+                width="1200"
+                height="750"
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-full object-cover object-center"
               />
               {/* Overlay Suave para Integração */}

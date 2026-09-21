@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import { ShieldCheck, Phone, MessageCircle, Menu, X, Image as ImageIcon } from 'lucide-react';
+import { ShieldCheck, Phone, MessageCircle, Menu, X } from 'lucide-react';
 import { CONTACT_INFO } from '../data/protectionData';
-import { useImages } from '../context/ImageContext';
 
 interface HeaderProps {
   onScrollTo: (id: string) => void;
 }
 
 export default function Header({ onScrollTo }: HeaderProps) {
-  const { setIsManagerOpen } = useImages();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -84,18 +82,6 @@ export default function Header({ onScrollTo }: HeaderProps) {
 
           {/* Botões de Ação */}
           <div className="hidden sm:flex items-center gap-2.5">
-            {/* BOTÃO EM DESTAQUE: TROCAR TODAS AS IMAGENS */}
-            <button
-              id="header-trocar-todas-imagens-btn"
-              type="button"
-              onClick={() => setIsManagerOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-black bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-xs hover:scale-105 transition-all cursor-pointer"
-              title="Trocar todas as fotos do site por temas prontos ou fotos do seu computador"
-            >
-              <ImageIcon className="w-4 h-4 text-slate-900" />
-              <span>Trocar Todas as Imagens</span>
-            </button>
-
             <a
               id="header-phone-btn"
               href={`tel:${CONTACT_INFO.phoneClean}`}
@@ -133,19 +119,6 @@ export default function Header({ onScrollTo }: HeaderProps) {
       {/* Menu gaveta mobile */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-5 space-y-3">
-          {/* Botão de Trocar Imagens no Mobile */}
-          <button
-            type="button"
-            onClick={() => {
-              setIsManagerOpen(true);
-              setMobileMenuOpen(false);
-            }}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-black bg-amber-400 hover:bg-amber-500 text-slate-950 shadow-sm"
-          >
-            <ImageIcon className="w-4 h-4" />
-            <span>Trocar Todas as Imagens</span>
-          </button>
-
           <div className="flex flex-col space-y-2">
             {navItems.map((item) => (
               <button
