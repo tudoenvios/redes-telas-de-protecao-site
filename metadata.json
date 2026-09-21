@@ -1,0 +1,8 @@
+{
+  "name": "Remix Redes Telas de Proteçao",
+  "description": "Redes e telas de proteção certificadas ABNT NBR 16046 para janelas e sacadas. Proteção para crianças e pets, simulador de orçamento e atendimento rápido.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
