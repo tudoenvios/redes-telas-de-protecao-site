@@ -32,10 +32,10 @@ export default function GalleryShowcase({ onOpenAdvisor }: GalleryShowcaseProps)
         <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
             <Camera className="w-3.5 h-3.5 text-emerald-600" />
-            Galeria de Instalações Reais
+            Galeria de Proteção
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900">
-            Veja Nossos Serviços Concluídos
+            Veja Aplicações e Soluções de Proteção
           </h2>
           <p className="text-sm sm:text-base text-zinc-600">
             Acabamento discreto, estética limpa e fixação milimétrica com ganchos em aço inoxidável e cordas de alta tenacidade.

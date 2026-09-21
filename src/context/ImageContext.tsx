@@ -12,20 +12,26 @@ export interface ImagePack {
 }
 
 // Conjunto Padrão
+const DEFAULT_BANNER_IMAGE = '/images/banner-protecao-apartamento.jpg';
+
 const DEFAULT_SERVICE_IMAGES: Record<string, string> = {
-  janelas: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
-  sacadas: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80',
-  'pets-gatos': 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80',
-  'escadas-mezaninos': 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+  janelas: '/images/sacada-crianca.jpg',
+  sacadas: '/images/sacada-rede-branca.jpg',
+  'pets-gatos': '/images/sacada-gato.jpg',
+  'escadas-mezaninos': '/images/escada-protegida.jpg',
 };
 
 const DEFAULT_GALLERY_IMAGES: Record<string, string> = {
-  'inst-1': 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80',
-  'inst-2': 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=800&q=80',
-  'inst-3': 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80',
-  'inst-4': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
-  'inst-5': 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
-  'inst-6': 'https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=800&q=80',
+  'inst-1': '/images/sacada-crianca.jpg',
+  'inst-2': '/images/sacada-gato.jpg',
+  'inst-3': '/images/sacada-rede-branca.jpg',
+  'inst-4': '/images/sacada-crianca-cadeira.jpg',
+  'inst-5': '/images/escada-protegida.jpg',
+  'inst-6': '/images/piscina-rede-protecao.jpg',
+  'inst-7': '/images/piscina-criancas-rede.jpg',
+  'inst-8': '/images/janela-rede-protecao.jpg',
+  'inst-9': '/images/banner-seguranca-criancas.jpg',
+  'inst-10': '/images/banner-seguranca-gatos.jpg',
 };
 
 export const THEMATIC_PACKS: ImagePack[] = [
@@ -149,10 +155,10 @@ export const ImageProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       return (
         localStorage.getItem(STORAGE_KEYS.BANNER) ||
         localStorage.getItem('protegelar_banner_img') ||
-        null
+        DEFAULT_BANNER_IMAGE
       );
     } catch {
-      return null;
+      return DEFAULT_BANNER_IMAGE;
     }
   });
 
