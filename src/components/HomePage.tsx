@@ -1,16 +1,22 @@
+import { lazy, Suspense } from 'react';
 import Header from './Header';
 import Hero from './Hero';
-import ApplicationsGrid from './ApplicationsGrid';
-import GalleryShowcase from './GalleryShowcase';
-import FreeQuoteAdvisor from './FreeQuoteAdvisor';
-import TechnicalSpecs from './TechnicalSpecs';
-import SafetyAudit from './SafetyAudit';
-import FaqSection from './FaqSection';
-import ContactCta from './ContactCta';
 import Footer from './Footer';
 import FloatingWhatsApp from './FloatingWhatsApp';
 import { ImageProvider } from '../context/ImageContext';
 import { CONTACT_INFO } from '../data/protectionData';
+
+const ApplicationsGrid = lazy(() => import('./ApplicationsGrid'));
+const GalleryShowcase = lazy(() => import('./GalleryShowcase'));
+const FreeQuoteAdvisor = lazy(() => import('./FreeQuoteAdvisor'));
+const TechnicalSpecs = lazy(() => import('./TechnicalSpecs'));
+const SafetyAudit = lazy(() => import('./SafetyAudit'));
+const FaqSection = lazy(() => import('./FaqSection'));
+const ContactCta = lazy(() => import('./ContactCta'));
+
+const DeferredSection = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<div className="min-h-24 bg-white" aria-hidden="true" />}>{children}</Suspense>
+);
 
 export default function HomePage() {
   const scrollToSection = (id: string) => {
@@ -36,13 +42,13 @@ export default function HomePage() {
             onOpenAdvisor={() => scrollToSection('orcamento-gratuito')}
             onOpenWhatsapp={() => handleOpenWhatsapp()}
           />
-          <div className="defer-render"><ApplicationsGrid onSelectService={() => scrollToSection('orcamento-gratuito')} /></div>
-          <div className="defer-render"><GalleryShowcase onOpenAdvisor={() => scrollToSection('orcamento-gratuito')} /></div>
-          <div className="defer-render"><FreeQuoteAdvisor onOpenWhatsappWithMsg={handleOpenWhatsapp} /></div>
-          <div className="defer-render"><TechnicalSpecs /></div>
-          <div className="defer-render"><SafetyAudit /></div>
-          <div className="defer-render"><FaqSection /></div>
-          <div className="defer-render"><ContactCta /></div>
+          <div className="defer-render"><DeferredSection><ApplicationsGrid onSelectService={() => scrollToSection('orcamento-gratuito')} /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><GalleryShowcase onOpenAdvisor={() => scrollToSection('orcamento-gratuito')} /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><FreeQuoteAdvisor onOpenWhatsappWithMsg={handleOpenWhatsapp} /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><TechnicalSpecs /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><SafetyAudit /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><FaqSection /></DeferredSection></div>
+          <div className="defer-render"><DeferredSection><ContactCta /></DeferredSection></div>
         </main>
         <Footer onScrollTo={scrollToSection} />
         <FloatingWhatsApp />
