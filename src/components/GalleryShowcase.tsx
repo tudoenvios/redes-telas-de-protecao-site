@@ -86,6 +86,8 @@ export default function GalleryShowcase({ onOpenAdvisor }: GalleryShowcaseProps)
                   <img
                     src={currentImg}
                     alt={item.imageAlt}
+                    loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.95]"
                   />
@@ -196,6 +198,7 @@ export default function GalleryShowcase({ onOpenAdvisor }: GalleryShowcaseProps)
               <img
                 src={galleryImages[activeModalImg.id] || activeModalImg.imageUrl}
                 alt={activeModalImg.imageAlt}
+                decoding="async"
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />

@@ -55,6 +55,8 @@ export default function ApplicationsGrid({ onSelectService }: ApplicationsGridPr
                     <img
                       src={currentImg}
                       alt={service.imageAlt || service.title}
+                      loading="lazy"
+                      decoding="async"
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

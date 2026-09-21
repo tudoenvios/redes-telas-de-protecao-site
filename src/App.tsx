@@ -18,8 +18,22 @@ import ImageManagerModal from './components/ImageManagerModal';
 import FloatingImageButton from './components/FloatingImageButton';
 import { ImageProvider } from './context/ImageContext';
 import { CONTACT_INFO } from './data/protectionData';
+import LocalLandingPage from './components/LocalLandingPage';
+import ServiceAreasPage from './components/ServiceAreasPage';
+import { findServiceArea } from './data/serviceAreas';
 
 export default function App() {
+  const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+  const serviceArea = findServiceArea(pathname);
+
+  if (serviceArea) {
+    return <LocalLandingPage area={serviceArea} />;
+  }
+
+  if (pathname === '/areas-atendidas') {
+    return <ServiceAreasPage />;
+  }
+
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {

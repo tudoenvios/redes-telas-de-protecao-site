@@ -148,7 +148,15 @@ export default function Footer({ onScrollTo }: FooterProps) {
               </div>
               <div className="flex items-start gap-2 pt-1">
                 <MapPin className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>Atendimento em toda a Região Metropolitana, Litoral e Interior</span>
+                <div>
+                  <span>Atendimento em toda a Região Metropolitana, Litoral e Interior</span>
+                  <a
+                    href="/areas-atendidas"
+                    className="mt-2 block font-semibold text-sky-400 hover:text-sky-300 transition-colors"
+                  >
+                    Ver todas as áreas de atendimento
+                  </a>
+                </div>
               </div>
             </div>
           </div>
