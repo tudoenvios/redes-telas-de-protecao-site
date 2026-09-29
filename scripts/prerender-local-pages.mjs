@@ -77,4 +77,30 @@ for (const slug of serviceTopicSlugs) {
   writeFileSync(output, html);
 }
 
-console.log(`Generated ${pages.length} local SEO entry pages and ${serviceTopicSlugs.length} service pages.`);
+const centralPages = [{
+  path: '/rede-de-protecao',
+  title: 'Rede de Proteção em São Paulo | Instalação Sob Medida',
+  description: 'Instalação de rede de proteção em São Paulo para janelas, sacadas, gatos, crianças, piscinas e escadas. Avaliação técnica e orçamento pelo WhatsApp.',
+}];
+
+for (const page of centralPages) {
+  const canonical = `${root}${page.path}`;
+  const schema = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'WebPage', '@id': `${canonical}#pagina`, url: canonical, name: page.title, description: page.description, inLanguage: 'pt-BR' },
+    { '@type': 'Service', '@id': `${canonical}#servico`, name: 'Instalação de redes de proteção', serviceType: 'Instalação de redes de proteção sob medida', areaServed: [{ '@type': 'City', name: 'São Paulo' }, { '@type': 'AdministrativeArea', name: 'Grande São Paulo' }], provider: { '@id': `${root}/#empresa` }, url: canonical },
+  ] };
+  const html = template
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(page.title)}</title>`)
+    .replace(/<meta name="title" content="[^"]*"\s*\/>/, `<meta name="title" content="${escapeHtml(page.title)}" />`)
+    .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${escapeHtml(page.description)}" />`)
+    .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
+    .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
+    .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${escapeHtml(page.title)}" />`)
+    .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${escapeHtml(page.description)}" />`)
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="static-central-schema" type="application/ld+json">${JSON.stringify(schema)}</script>`);
+  const output = join('dist', page.path, 'index.html');
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(output, html);
+}
+
+console.log(`Generated ${pages.length} local SEO entry pages, ${serviceTopicSlugs.length} service pages and ${centralPages.length} central page.`);

@@ -8,6 +8,7 @@ import LocalLandingPage from './components/LocalLandingPage';
 import ServiceAreasPage from './components/ServiceAreasPage';
 import MosquitoScreensPage from './components/MosquitoScreensPage';
 import ServiceTopicPage from './components/ServiceTopicPage';
+import ProtectionPillarPage from './components/ProtectionPillarPage';
 import { findServiceArea } from './data/serviceAreas';
 import { findServiceTopic } from './data/serviceTopics';
 
@@ -30,6 +31,10 @@ export default function App() {
 
   if (pathname === '/telas-mosquiteiras') {
     return <MosquitoScreensPage />;
+  }
+
+  if (pathname === '/rede-de-protecao') {
+    return <ProtectionPillarPage />;
   }
 
   return <HomePage />;
