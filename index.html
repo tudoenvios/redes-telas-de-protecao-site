@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="pt-BR">
   <head>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18414483445"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-18414483445');
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -129,6 +138,40 @@
         }
       ]
     }
+    </script>
+    <!-- Google Ads conversion events: WhatsApp and phone -->
+    <script>
+      function reportGoogleAdsConversion(sendTo, url) {
+        var callback = function () {
+          if (url) window.location.href = url;
+        };
+        gtag('event', 'conversion', {
+          'send_to': sendTo,
+          'value': 1.0,
+          'currency': 'BRL',
+          'event_callback': callback
+        });
+        if (url) setTimeout(callback, 800);
+      }
+
+      document.addEventListener('click', function (event) {
+        var target = event.target.closest('a, button');
+        if (!target) return;
+
+        var href = target.tagName === 'A' ? target.href : '';
+        var id = (target.id || '').toLowerCase();
+        var sendTo = '';
+
+        if (/^https?:\/\/(wa\.me|api\.whatsapp\.com)/i.test(href) || id.includes('whatsapp')) {
+          sendTo = 'AW-18414483445/0EP_CLPKzIAdEPXv2sxE';
+        } else if (href.startsWith('tel:') || id.includes('phone')) {
+          sendTo = 'AW-18414483445/oXG-CLbKzIAdEPXv2sxE';
+        }
+
+        if (!sendTo) return;
+        if (href) event.preventDefault();
+        reportGoogleAdsConversion(sendTo, href);
+      }, true);
     </script>
   </head>
   <body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-sky-100 selection:text-sky-900">
