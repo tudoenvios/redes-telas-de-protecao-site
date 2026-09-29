@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { coastalNeighborhoods, districtNames, regionalNames, root, slugify } from './generate-sitemap.mjs';
+import { coastalNeighborhoods, districtNames, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
 
 const template = readFileSync('dist/index.html', 'utf8');
 const regions = new Set(['ABC Paulista', 'Alphaville', 'Granja Viana']);
@@ -11,6 +11,15 @@ const pages = [
 ];
 
 const escapeHtml = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+const topicNames = {
+  'rede-de-protecao-para-janelas': 'Rede de proteção para janelas em São Paulo',
+  'rede-de-protecao-para-sacadas': 'Rede de proteção para sacadas e varandas',
+  'rede-de-protecao-para-gatos': 'Rede de proteção para gatos em apartamentos',
+  'rede-de-protecao-para-criancas': 'Rede de proteção para crianças em janelas e sacadas',
+  'rede-de-protecao-para-piscinas': 'Rede de proteção para piscinas residenciais',
+  'rede-de-protecao-para-escadas': 'Rede de proteção para escadas e mezaninos',
+};
 
 for (const page of pages) {
   const canonical = `${root}${page.path}`;
@@ -46,4 +55,26 @@ for (const page of pages) {
   writeFileSync(output, html);
 }
 
-console.log(`Generated ${pages.length} local SEO entry pages.`);
+for (const slug of serviceTopicSlugs) {
+  const canonical = `${root}/servicos/${slug}`;
+  const title = `${topicNames[slug]} | Rede & Proteção`;
+  const description = `${topicNames[slug]} com avaliação técnica, instalação sob medida e orçamento pelo WhatsApp em São Paulo e região.`;
+  const schema = { '@context': 'https://schema.org', '@graph': [
+    { '@type': 'WebPage', '@id': `${canonical}#pagina`, url: canonical, name: title, description, inLanguage: 'pt-BR' },
+    { '@type': 'Service', '@id': `${canonical}#servico`, name: topicNames[slug], serviceType: topicNames[slug], areaServed: [{ '@type': 'City', name: 'São Paulo' }, { '@type': 'AdministrativeArea', name: 'Grande São Paulo' }], provider: { '@id': `${root}/#empresa` }, url: canonical },
+  ] };
+  const html = template
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+    .replace(/<meta name="title" content="[^"]*"\s*\/>/, `<meta name="title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${escapeHtml(description)}" />`)
+    .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
+    .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
+    .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${escapeHtml(description)}" />`)
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="static-topic-schema" type="application/ld+json">${JSON.stringify(schema)}</script>`);
+  const output = join('dist', 'servicos', slug, 'index.html');
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(output, html);
+}
+
+console.log(`Generated ${pages.length} local SEO entry pages and ${serviceTopicSlugs.length} service pages.`);

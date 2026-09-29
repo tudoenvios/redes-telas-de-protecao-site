@@ -3,6 +3,7 @@ import { CheckCircle2, ChevronRight, MapPin, MessageCircle, Phone, ShieldCheck }
 import { CONTACT_INFO } from '../data/protectionData';
 import { getAreaPath, getRelatedAreas, ServiceArea } from '../data/serviceAreas';
 import { mercadoLivreProducts } from './MosquitoScreensPage';
+import { getTopicPath, serviceTopics } from '../data/serviceTopics';
 
 const ROOT_URL = 'https://redestelasdeprotecoes.com.br';
 
@@ -132,6 +133,8 @@ export default function LocalLandingPage({ area }: { area: ServiceArea }) {
           <div><h2 className="text-3xl font-bold">Escolha da malha e manutenção</h2><p className="mt-4 leading-7 text-zinc-700">A escolha entre malha 3x3 cm e 5x5 cm considera o porte dos pets, o tipo de vão e a aplicação. A instalação deve respeitar as condições do imóvel e os requisitos técnicos aplicáveis.</p><p className="mt-4 leading-7 text-zinc-700">Depois da instalação, faça inspeções visuais e solicite avaliação se houver folgas, cortes, ressecamento ou impacto. Evite reparos improvisados.</p><div className="mt-5 flex flex-wrap gap-4"><a href="/#especificacoes" className="font-semibold text-sky-700 hover:text-sky-900">Informações técnicas</a><a href="/telas-mosquiteiras" className="font-semibold text-sky-700 hover:text-sky-900">Conhecer telas mosquiteiras</a></div></div>
         </div>
       </section>
+
+      <section className="mx-auto max-w-6xl px-4 py-14"><h2 className="text-3xl font-bold">Serviços de proteção em {area.name}</h2><p className="mt-3 max-w-3xl text-zinc-600">Veja orientações específicas para cada ambiente e necessidade antes de solicitar a avaliação local.</p><div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">{serviceTopics.map((topic) => <a key={topic.slug} href={getTopicPath(topic)} className="flex items-center justify-between border border-zinc-200 bg-white p-4 font-bold text-sky-800 hover:border-sky-500">{topic.shortName}<ChevronRight className="h-5 w-5" /></a>)}</div></section>
 
       <section className="mx-auto max-w-6xl px-4 py-14"><h2 className="text-3xl font-bold">Perguntas frequentes em {area.name}</h2><div className="mt-7 divide-y divide-zinc-200 border-y border-zinc-200">{faq.map((item) => <details key={item.question} className="py-5"><summary className="cursor-pointer font-bold">{item.question}</summary><p className="max-w-3xl pt-3 leading-7 text-zinc-600">{item.answer}</p></details>)}</div></section>
 
