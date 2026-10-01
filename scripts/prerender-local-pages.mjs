@@ -78,6 +78,10 @@ const guidePages = {
     title: 'Ranking de bairros com mais condominios em Sao Paulo | Rede & Protecao',
     description: 'Guia estrategico sobre bairros de Sao Paulo com alta concentracao de edificios residenciais, condominios, apartamentos, sacadas e demanda por redes de protecao.',
   },
+  'como-proteger-gatos-em-apartamento': {
+    title: 'Como proteger gatos em apartamento | Janelas e sacadas seguras',
+    description: 'Guia para proteger gatos em apartamento com redes em janelas, sacadas, areas de servico e basculantes. Veja cuidados antes de instalar e como pedir orcamento.',
+  },
 };
 
 for (const page of pages) {

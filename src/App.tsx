@@ -10,6 +10,7 @@ import MosquitoScreensPage from './components/MosquitoScreensPage';
 import ServiceTopicPage from './components/ServiceTopicPage';
 import ProtectionPillarPage from './components/ProtectionPillarPage';
 import CondoRankingGuidePage from './components/CondoRankingGuidePage';
+import CatsApartmentGuidePage from './components/CatsApartmentGuidePage';
 import { findServiceArea } from './data/serviceAreas';
 import { findServiceTopic } from './data/serviceTopics';
 
@@ -40,6 +41,10 @@ export default function App() {
 
   if (pathname === '/guias/ranking-bairros-condominios-sao-paulo') {
     return <CondoRankingGuidePage />;
+  }
+
+  if (pathname === '/guias/como-proteger-gatos-em-apartamento') {
+    return <CatsApartmentGuidePage />;
   }
 
   return <HomePage />;

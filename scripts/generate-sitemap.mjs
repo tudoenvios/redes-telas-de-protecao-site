@@ -9,7 +9,7 @@ export const coastalNeighborhoods = [
   ...['Ponta da Praia','Aparecida','Embaré','Boqueirão','Gonzaga','Pompéia','José Menino'].map((name) => ({ name, city: 'Santos', citySlug: 'santos' })),
 ];
 export const serviceTopicSlugs = ['rede-de-protecao-para-janelas','rede-de-protecao-para-sacadas','rede-de-protecao-para-gatos','rede-de-protecao-para-criancas','rede-de-protecao-para-piscinas','rede-de-protecao-para-escadas'];
-export const guideSlugs = ['ranking-bairros-condominios-sao-paulo'];
+export const guideSlugs = ['ranking-bairros-condominios-sao-paulo','como-proteger-gatos-em-apartamento'];
 export const slugify = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 export const root = 'https://www.redestelasdeprotecoes.com.br';
 const urls = [root + '/', root + '/rede-de-protecao', root + '/telas-mosquiteiras', root + '/areas-atendidas', ...guideSlugs.map((slug) => `${root}/guias/${slug}`), ...serviceTopicSlugs.map((slug) => `${root}/servicos/${slug}`), ...districtNames.map((name) => `${root}/distritos/${slugify(name)}`), ...regionalNames.map((name) => `${root}/atendimento/${slugify(name)}`), ...coastalNeighborhoods.map(({ name, citySlug }) => `${root}/${citySlug}/${slugify(name)}`)];
