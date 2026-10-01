@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { CheckCircle2, ChevronRight, MapPin, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
 import { CONTACT_INFO } from '../data/protectionData';
+import { getLocalSeoProfile } from '../data/localSeoProfiles';
 import { getAreaPath, getRelatedAreas, ServiceArea } from '../data/serviceAreas';
 import { mercadoLivreProducts } from './MosquitoScreensPage';
 import { getTopicPath, serviceTopics } from '../data/serviceTopics';
@@ -29,8 +30,9 @@ const hash = (value: string) => value.split('').reduce((total, char) => total + 
 export default function LocalLandingPage({ area }: { area: ServiceArea }) {
   const location = area.kind === 'distrito' ? `${area.name}, São Paulo` : area.kind === 'bairro-litoral' ? `${area.name}, ${area.city}` : area.name;
   const canonical = `${ROOT_URL}${getAreaPath(area)}`;
-  const title = `Rede de Proteção em ${location} | Janelas e Sacadas`;
-  const description = `Rede de proteção em ${location} para janelas, sacadas, crianças e pets. Avaliação técnica, instalação sob medida e orçamento rápido pelo WhatsApp.`;
+  const profile = getLocalSeoProfile(area.slug);
+  const title = profile?.title ?? `Rede de Proteção em ${location} | Janelas e Sacadas`;
+  const description = profile?.description ?? `Rede de proteção em ${location} para janelas, sacadas, crianças e pets. Avaliação técnica, instalação sob medida e orçamento rápido pelo WhatsApp.`;
   const relatedAreas = useMemo(() => getRelatedAreas(area), [area]);
   const focusOffset = hash(area.slug) % serviceFocuses.length;
   const orderedServices = [...serviceFocuses.slice(focusOffset), ...serviceFocuses.slice(0, focusOffset)];
@@ -39,11 +41,11 @@ export default function LocalLandingPage({ area }: { area: ServiceArea }) {
   const message = encodeURIComponent(`Olá! Gostaria de um orçamento para rede de proteção em ${location}. Posso enviar fotos e medidas aproximadas.`);
   const whatsappUrl = `https://wa.me/${CONTACT_INFO.phoneClean}?text=${message}`;
   const faq = useMemo(() => [
-    { question: `Vocês instalam rede de proteção em ${area.name}?`, answer: `Sim. Atendemos ${location} mediante agendamento. Para uma avaliação inicial, envie pelo WhatsApp fotos e medidas aproximadas das janelas, sacadas ou demais vãos.` },
+    { question: `Vocês instalam rede de proteção em ${area.name}?`, answer: `Sim. Atendemos ${location} mediante agendamento. Para uma avaliação inicial, envie pelo WhatsApp fotos e medidas aproximadas das janelas, sacadas ou demais vãos.${profile ? ` Também avaliamos bairros próximos como ${profile.nearbyAreas.slice(0, 3).join(', ')}.` : ''}` },
     { question: `Qual malha é indicada para apartamentos com gatos em ${area.name}?`, answer: 'A escolha entre malha 3x3 cm e 5x5 cm depende do porte e do comportamento do animal, do tipo de abertura e das regras do condomínio. A indicação é feita após avaliar o ambiente.' },
     { question: 'Como solicitar orçamento para janelas e sacadas?', answer: `Informe o tipo de imóvel em ${area.name}, a quantidade de vãos e as medidas aproximadas. Fotos ajudam a identificar esquadrias, acesso e condições de fixação.` },
     { question: 'A rede precisa de manutenção?', answer: 'Sim. Faça inspeções visuais periódicas e solicite avaliação se houver cortes, folgas, ressecamento, impacto ou alteração nos pontos de fixação. Não improvise reparos.' },
-  ], [area.name, location]);
+  ], [area.name, location, profile]);
 
   useEffect(() => {
     document.title = title;
@@ -102,8 +104,9 @@ export default function LocalLandingPage({ area }: { area: ServiceArea }) {
           <div>
             <p className="mb-4 inline-flex items-center gap-2 text-sm font-semibold text-sky-200"><MapPin className="h-4 w-4" /> {area.zone}</p>
             <h1 className="max-w-3xl text-4xl font-black leading-tight sm:text-5xl">Rede de proteção em {area.name}</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-sky-100">Instalação sob medida em apartamentos e condomínios, com soluções para janelas, sacadas, varandas, crianças, gatos e outros pets em {location}.</p>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-sky-100">{profile?.intro ?? `Instalação sob medida em apartamentos e condomínios, com soluções para janelas, sacadas, varandas, crianças, gatos e outros pets em ${location}.`}</p>
             <div className="mt-8 flex flex-wrap gap-3"><a href={whatsappUrl} className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-5 py-3 font-bold text-white hover:bg-emerald-600"><MessageCircle className="h-5 w-5" /> Pedir orçamento</a><a href={`tel:+${CONTACT_INFO.phoneClean}`} className="inline-flex items-center gap-2 rounded-md border border-sky-300 px-5 py-3 font-bold text-white hover:bg-sky-900"><Phone className="h-5 w-5" /> Ligar agora</a></div>
+            {profile && <div className="mt-6 flex flex-wrap gap-2">{profile.secondaryKeywords.map((keyword) => <span key={keyword} className="rounded-full border border-sky-700 bg-sky-900 px-3 py-1 text-sm font-semibold text-sky-100">{keyword}</span>)}</div>}
           </div>
           <aside className="border border-sky-800 bg-sky-900 p-6"><h2 className="text-xl font-bold">O que enviar para avaliação</h2><ul className="mt-5 space-y-3 text-sky-100">{['Fotos amplas das janelas ou sacadas', 'Medidas aproximadas dos vãos', 'Quantidade de locais a proteger', 'Informação sobre crianças ou pets'].map((item) => <li key={item} className="flex gap-2"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-400" />{item}</li>)}</ul></aside>
         </div>
@@ -113,6 +116,25 @@ export default function LocalLandingPage({ area }: { area: ServiceArea }) {
         <div className="max-w-3xl"><p className="text-sm font-bold uppercase text-sky-700">Soluções em {area.name}</p><h2 className="mt-2 text-3xl font-bold">Proteção planejada para cada abertura</h2><p className="mt-4 leading-7 text-zinc-700">O atendimento em {location} começa pela análise do ambiente. Tipo de esquadria, dimensões, acesso para instalação e regras do condomínio influenciam a solução recomendada.</p></div>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">{orderedServices.map(([name, detail, image]) => <article key={name} className="overflow-hidden border border-zinc-200 bg-white"><img src={image} alt={`${name} com rede de proteção`} className="h-48 w-full object-cover" loading="lazy" /><div className="p-5"><h3 className="text-lg font-bold">{name}</h3><p className="mt-2 leading-6 text-zinc-600">{detail}</p></div></article>)}</div>
       </section>
+
+      {profile && (
+        <section className="border-y border-zinc-200 bg-white py-14">
+          <div className="mx-auto grid max-w-6xl gap-8 px-4 lg:grid-cols-[1.1fr_.9fr]">
+            <div>
+              <p className="text-sm font-bold uppercase text-sky-700">SEO local verificado</p>
+              <h2 className="mt-2 text-3xl font-bold">Por que criar uma página específica para {area.name}</h2>
+              <p className="mt-4 leading-7 text-zinc-700">{profile.localAngle}</p>
+              <p className="mt-4 leading-7 text-zinc-700"><strong>Intenção de busca:</strong> {profile.intent}</p>
+              <div className="mt-5 flex flex-wrap gap-2">{profile.nearbyAreas.map((nearby) => <span key={nearby} className="rounded-full bg-sky-50 px-3 py-1 text-sm font-semibold text-sky-800">{nearby}</span>)}</div>
+            </div>
+            <div className="border border-zinc-200 bg-zinc-50 p-6">
+              <h3 className="text-xl font-bold">Sinais que fortalecem esta página</h3>
+              <ul className="mt-5 space-y-3 text-zinc-700">{profile.proofSignals.map((signal) => <li key={signal} className="flex gap-2"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />{signal}</li>)}</ul>
+              <div className="mt-6 flex flex-wrap gap-3">{profile.internalLinks.map((link) => <a key={link.href} href={link.href} className="font-semibold text-sky-700 hover:text-sky-900">{link.label}</a>)}</div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="border-y border-zinc-200 bg-white py-14">
         <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 lg:grid-cols-2">

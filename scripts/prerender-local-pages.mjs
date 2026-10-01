@@ -3,6 +3,58 @@ import { dirname, join } from 'node:path';
 import { coastalNeighborhoods, districtNames, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
 
 const template = readFileSync('dist/index.html', 'utf8');
+const priorityProfiles = {
+  'vila-mariana': {
+    title: 'Rede de Proteção na Vila Mariana | Janelas, Sacadas e Gatos',
+    description: 'Rede de proteção na Vila Mariana para apartamentos, janelas, sacadas, crianças e gatos. Atendimento local com avaliação técnica e orçamento rápido pelo WhatsApp.',
+    nearbyAreas: ['Ana Rosa', 'Chácara Klabin', 'Saúde', 'Aclimação'],
+  },
+  moema: {
+    title: 'Rede de Proteção em Moema | Apartamentos, Sacadas e Pets',
+    description: 'Instalação de rede de proteção em Moema para janelas, varandas, sacadas, crianças e pets. Atendimento sob medida em condomínios e orçamento pelo WhatsApp.',
+    nearbyAreas: ['Vila Olímpia', 'Indianópolis', 'Campo Belo', 'Ibirapuera'],
+  },
+  'jardim-paulista': {
+    title: 'Rede de Proteção no Jardim Paulista | Janelas e Sacadas',
+    description: 'Rede de proteção no Jardim Paulista para apartamentos, janelas, sacadas e pets. Avaliação técnica, instalação sob medida e atendimento por WhatsApp.',
+    nearbyAreas: ['Jardins', 'Cerqueira César', 'Paraíso', 'Pinheiros'],
+  },
+  santana: {
+    title: 'Rede de Proteção em Santana | Zona Norte SP',
+    description: 'Rede de proteção em Santana para janelas, sacadas, gatos e crianças. Instalação sob medida na Zona Norte de São Paulo com orçamento rápido.',
+    nearbyAreas: ['Tucuruvi', 'Casa Verde', 'Mandaqui', 'Vila Guilherme'],
+  },
+  tatuape: {
+    title: 'Rede de Proteção no Tatuapé | Janelas, Varandas e Pets',
+    description: 'Instalação de rede de proteção no Tatuapé para apartamentos, janelas, varandas, gatos e crianças. Atendimento técnico e orçamento pelo WhatsApp.',
+    nearbyAreas: ['Anália Franco', 'Carrão', 'Mooca', 'Belém'],
+  },
+  mooca: {
+    title: 'Rede de Proteção na Mooca | Sacadas, Janelas e Gatos',
+    description: 'Rede de proteção na Mooca para janelas, sacadas, crianças e pets. Instalação planejada para apartamentos e condomínios com orçamento rápido.',
+    nearbyAreas: ['Belenzinho', 'Brás', 'Tatuapé', 'Ipiranga'],
+  },
+  ipiranga: {
+    title: 'Rede de Proteção no Ipiranga | Apartamentos e Sacadas',
+    description: 'Rede de proteção no Ipiranga para janelas, sacadas, varandas, crianças e gatos. Atendimento sob medida e avaliação técnica pelo WhatsApp.',
+    nearbyAreas: ['Sacomã', 'Vila Mariana', 'Saúde', 'Mooca'],
+  },
+  saude: {
+    title: 'Rede de Proteção na Saúde | Janelas, Sacadas e Pets',
+    description: 'Rede de proteção na Saúde para apartamentos, janelas, sacadas, crianças e gatos. Orçamento rápido e instalação sob medida em São Paulo.',
+    nearbyAreas: ['Praça da Árvore', 'Vila Mariana', 'Jabaquara', 'Ipiranga'],
+  },
+  perdizes: {
+    title: 'Rede de Proteção em Perdizes | Varandas, Janelas e Pets',
+    description: 'Instalação de rede de proteção em Perdizes para varandas, janelas, crianças e pets. Atendimento técnico em condomínios e orçamento pelo WhatsApp.',
+    nearbyAreas: ['Pompéia', 'Sumaré', 'Barra Funda', 'Higienópolis'],
+  },
+  pinheiros: {
+    title: 'Rede de Proteção em Pinheiros | Janelas, Sacadas e Gatos',
+    description: 'Rede de proteção em Pinheiros para apartamentos, janelas, sacadas, gatos e crianças. Instalação sob medida e orçamento rápido pelo WhatsApp.',
+    nearbyAreas: ['Vila Madalena', 'Jardins', 'Butantã', 'Itaim Bibi'],
+  },
+};
 const regions = new Set(['ABC Paulista', 'Alphaville', 'Granja Viana']);
 const pages = [
   ...districtNames.map((name) => ({ name, path: `/distritos/${slugify(name)}`, location: `${name}, São Paulo`, areaType: 'AdministrativeArea' })),
@@ -23,8 +75,19 @@ const topicNames = {
 
 for (const page of pages) {
   const canonical = `${root}${page.path}`;
-  const title = `Rede de Proteção em ${page.location} | Janelas e Sacadas`;
-  const description = `Rede de proteção em ${page.location} para janelas, sacadas, crianças e pets. Avaliação técnica, instalação sob medida e orçamento rápido pelo WhatsApp.`;
+  const profile = priorityProfiles[slugify(page.name)];
+  const title = profile?.title ?? `Rede de Proteção em ${page.location} | Janelas e Sacadas`;
+  const description = profile?.description ?? `Rede de proteção em ${page.location} para janelas, sacadas, crianças e pets. Avaliação técnica, instalação sob medida e orçamento rápido pelo WhatsApp.`;
+  const faq = profile ? [
+    {
+      question: `Vocês instalam rede de proteção em ${page.name}?`,
+      answer: `Sim. Atendemos ${page.location} e bairros próximos como ${profile.nearbyAreas.slice(0, 3).join(', ')} mediante agendamento pelo WhatsApp.`,
+    },
+    {
+      question: `Como pedir orçamento para ${page.name}?`,
+      answer: 'Envie fotos amplas das janelas ou sacadas, medidas aproximadas e informe se a instalação é para crianças, gatos, outros pets ou prevenção geral.',
+    },
+  ] : [];
   const schema = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -35,6 +98,7 @@ for (const page of pages) {
         { '@type': 'ListItem', position: 2, name: 'Áreas atendidas', item: `${root}/areas-atendidas` },
         { '@type': 'ListItem', position: 3, name: page.name, item: canonical },
       ] },
+      ...(faq.length ? [{ '@type': 'FAQPage', '@id': `${canonical}#faq`, mainEntity: faq.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) }] : []),
     ],
   };
 
