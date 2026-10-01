@@ -3,7 +3,7 @@ import { CheckCircle2, ChevronRight, MessageCircle, Phone, ShieldCheck } from 'l
 import { CONTACT_INFO } from '../data/protectionData';
 import { getTopicPath, ServiceTopic, serviceTopics } from '../data/serviceTopics';
 
-const ROOT_URL = 'https://redestelasdeprotecoes.com.br';
+const ROOT_URL = 'https://www.redestelasdeprotecoes.com.br';
 
 export default function ServiceTopicPage({ topic }: { topic: ServiceTopic }) {
   const canonical = `${ROOT_URL}${getTopicPath(topic)}`;

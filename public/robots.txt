@@ -16,4 +16,4 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://redestelasdeprotecoes.com.br/sitemap.xml
+Sitemap: https://www.redestelasdeprotecoes.com.br/sitemap.xml

@@ -259,7 +259,7 @@ export default function MosquitoScreensPage() {
       canonical.rel = 'canonical';
       document.head.appendChild(canonical);
     }
-    canonical.href = 'https://redestelasdeprotecoes.com.br/telas-mosquiteiras';
+    canonical.href = 'https://www.redestelasdeprotecoes.com.br/telas-mosquiteiras';
     const script = document.createElement('script');
     script.type = 'application/ld+json';
     script.id = 'mosquito-screen-schema';

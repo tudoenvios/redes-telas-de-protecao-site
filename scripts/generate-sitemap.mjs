@@ -10,7 +10,7 @@ export const coastalNeighborhoods = [
 ];
 export const serviceTopicSlugs = ['rede-de-protecao-para-janelas','rede-de-protecao-para-sacadas','rede-de-protecao-para-gatos','rede-de-protecao-para-criancas','rede-de-protecao-para-piscinas','rede-de-protecao-para-escadas'];
 export const slugify = (value) => value.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-export const root = 'https://redestelasdeprotecoes.com.br';
+export const root = 'https://www.redestelasdeprotecoes.com.br';
 const urls = [root + '/', root + '/rede-de-protecao', root + '/telas-mosquiteiras', root + '/areas-atendidas', ...serviceTopicSlugs.map((slug) => `${root}/servicos/${slug}`), ...districtNames.map((name) => `${root}/distritos/${slugify(name)}`), ...regionalNames.map((name) => `${root}/atendimento/${slugify(name)}`), ...coastalNeighborhoods.map(({ name, citySlug }) => `${root}/${citySlug}/${slugify(name)}`)];
 const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((url) => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`;
 mkdirSync('public', { recursive: true });

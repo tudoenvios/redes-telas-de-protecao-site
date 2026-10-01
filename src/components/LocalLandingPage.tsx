@@ -6,7 +6,7 @@ import { getAreaPath, getRelatedAreas, ServiceArea } from '../data/serviceAreas'
 import { mercadoLivreProducts } from './MosquitoScreensPage';
 import { getTopicPath, serviceTopics } from '../data/serviceTopics';
 
-const ROOT_URL = 'https://redestelasdeprotecoes.com.br';
+const ROOT_URL = 'https://www.redestelasdeprotecoes.com.br';
 
 function setMeta(selector: string, attribute: 'name' | 'property', key: string, content: string) {
   let element = document.querySelector<HTMLMetaElement>(selector);

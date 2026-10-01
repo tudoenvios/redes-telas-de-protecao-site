@@ -3,7 +3,7 @@ import { CheckCircle2, ChevronRight, MessageCircle, Phone, ShieldCheck } from 'l
 import { CONTACT_INFO } from '../data/protectionData';
 import { getTopicPath, serviceTopics } from '../data/serviceTopics';
 
-const ROOT_URL = 'https://redestelasdeprotecoes.com.br';
+const ROOT_URL = 'https://www.redestelasdeprotecoes.com.br';
 const PATH = '/rede-de-protecao';
 const TITLE = 'Rede de Proteção em São Paulo | Instalação Sob Medida';
 const DESCRIPTION = 'Instalação de rede de proteção em São Paulo para janelas, sacadas, gatos, crianças, piscinas e escadas. Avaliação técnica e orçamento pelo WhatsApp.';
