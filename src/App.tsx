@@ -9,6 +9,7 @@ import ServiceAreasPage from './components/ServiceAreasPage';
 import MosquitoScreensPage from './components/MosquitoScreensPage';
 import ServiceTopicPage from './components/ServiceTopicPage';
 import ProtectionPillarPage from './components/ProtectionPillarPage';
+import CondoRankingGuidePage from './components/CondoRankingGuidePage';
 import { findServiceArea } from './data/serviceAreas';
 import { findServiceTopic } from './data/serviceTopics';
 
@@ -35,6 +36,10 @@ export default function App() {
 
   if (pathname === '/rede-de-protecao') {
     return <ProtectionPillarPage />;
+  }
+
+  if (pathname === '/guias/ranking-bairros-condominios-sao-paulo') {
+    return <CondoRankingGuidePage />;
   }
 
   return <HomePage />;

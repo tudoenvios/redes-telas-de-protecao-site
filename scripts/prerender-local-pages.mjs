@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { coastalNeighborhoods, districtNames, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
+import { coastalNeighborhoods, districtNames, guideSlugs, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
 
 const template = readFileSync('dist/index.html', 'utf8');
 const priorityProfiles = {
@@ -73,6 +73,13 @@ const topicNames = {
   'rede-de-protecao-para-escadas': 'Rede de proteção para escadas e mezaninos',
 };
 
+const guidePages = {
+  'ranking-bairros-condominios-sao-paulo': {
+    title: 'Ranking de bairros com mais condominios em Sao Paulo | Rede & Protecao',
+    description: 'Guia estrategico sobre bairros de Sao Paulo com alta concentracao de edificios residenciais, condominios, apartamentos, sacadas e demanda por redes de protecao.',
+  },
+};
+
 for (const page of pages) {
   const canonical = `${root}${page.path}`;
   const profile = priorityProfiles[slugify(page.name)];
@@ -141,6 +148,25 @@ for (const slug of serviceTopicSlugs) {
   writeFileSync(output, html);
 }
 
+for (const slug of guideSlugs) {
+  const page = guidePages[slug];
+  if (!page) continue;
+  const canonical = `${root}/guias/${slug}`;
+  const schema = { '@context': 'https://schema.org', '@type': 'Article', headline: page.title, description: page.description, inLanguage: 'pt-BR', author: { '@type': 'Organization', name: 'Rede & Protecao' }, publisher: { '@type': 'Organization', name: 'Rede & Protecao' }, mainEntityOfPage: canonical };
+  const html = template
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(page.title)}</title>`)
+    .replace(/<meta name="title" content="[^"]*"\s*\/>/, `<meta name="title" content="${escapeHtml(page.title)}" />`)
+    .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${escapeHtml(page.description)}" />`)
+    .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
+    .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
+    .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${escapeHtml(page.title)}" />`)
+    .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${escapeHtml(page.description)}" />`)
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="static-guide-schema" type="application/ld+json">${JSON.stringify(schema)}</script>`);
+  const output = join('dist', 'guias', slug, 'index.html');
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(output, html);
+}
+
 const centralPages = [{
   path: '/rede-de-protecao',
   title: 'Rede de Proteção em São Paulo | Instalação Sob Medida',
@@ -167,4 +193,4 @@ for (const page of centralPages) {
   writeFileSync(output, html);
 }
 
-console.log(`Generated ${pages.length} local SEO entry pages, ${serviceTopicSlugs.length} service pages and ${centralPages.length} central page.`);
+console.log(`Generated ${pages.length} local SEO entry pages, ${serviceTopicSlugs.length} service pages, ${guideSlugs.length} guide page and ${centralPages.length} central page.`);
