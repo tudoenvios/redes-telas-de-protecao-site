@@ -71,6 +71,9 @@ const topicNames = {
   'rede-de-protecao-para-criancas': 'Rede de proteção para crianças em janelas e sacadas',
   'rede-de-protecao-para-piscinas': 'Rede de proteção para piscinas residenciais',
   'rede-de-protecao-para-escadas': 'Rede de proteção para escadas e mezaninos',
+  'rede-de-protecao-para-galpoes': 'Rede de proteção para galpões, depósitos e áreas industriais',
+  'rede-de-protecao-para-beach-tennis': 'Rede de proteção para quadra de beach tennis',
+  'rede-anti-passaro': 'Rede anti-pássaro sob medida',
 };
 
 const guidePages = {

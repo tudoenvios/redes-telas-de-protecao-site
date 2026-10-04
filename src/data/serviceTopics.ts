@@ -119,6 +119,19 @@ export const serviceTopics: ServiceTopic[] = [
       { question: 'Como pedir orçamento para uma quadra?', answer: 'Envie fotos amplas da quadra, medidas aproximadas do perímetro, altura desejada e informe se já existem postes, muros ou pontos de fixação.' },
     ],
   },
+  {
+    slug: 'rede-anti-passaro', name: 'Rede anti-pássaro', shortName: 'Anti-pássaro', title: 'Rede anti-pássaro sob medida',
+    description: 'Rede tela de proteção anti-pássaros com tratamento Anti-UV, malhas variadas e aplicação em aviários, lagos, tanques-rede, casas, indústrias e armazenamento.',
+    intro: 'Rede anti-pássaro leve e discreta para fechamento de vãos, aviários, lagos, tanques-rede, casas, indústrias e áreas com entrada ou abrigo de aves.',
+    image: '/images/rede-anti-passaro.jpeg', imageAlt: 'Rede anti-pássaro instalada para controle de aves',
+    applications: ['Aviários', 'Lagos e tanques-rede', 'Casas e indústrias', 'Armazenamento de grãos'],
+    checks: ['Altura x largura do vão', 'Tipo de ave ou praga a conter', 'Pontos de fixação disponíveis', 'Malha indicada para o objetivo'],
+    faq: [
+      { question: 'A rede anti-pássaro é feita sob medida?', answer: 'Sim. O orçamento considera altura, largura, fotos do local, tipo de aplicação e malha desejada.' },
+      { question: 'Quais malhas estão disponíveis?', answer: 'Trabalhamos com opções como 5 cm x 5 cm, 3 cm x 3 cm, 2 cm x 2 cm e 1,5 cm x 1,5 cm.' },
+      { question: 'Serve para galpões e armazenamento?', answer: 'Pode ser avaliada para casas, indústrias, galpões, aviários, armazenamento de grãos e locais que possam abrigar aves.' },
+    ],
+  },
 ];
 
 export const getTopicPath = (topic: ServiceTopic) => `/servicos/${topic.slug}`;
