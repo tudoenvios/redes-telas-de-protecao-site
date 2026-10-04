@@ -91,6 +91,34 @@ export const serviceTopics: ServiceTopic[] = [
       { question: 'É necessário furar a estrutura?', answer: 'O método depende do local e do material existente. A equipe confirma a solução adequada após avaliar o ambiente.' },
     ],
   },
+  {
+    slug: 'rede-de-protecao-para-galpoes', name: 'Rede de proteção para galpões', shortName: 'Galpões', title: 'Rede de proteção para galpões, depósitos e áreas industriais',
+    description: 'Rede de proteção para galpões, depósitos, mezaninos, áreas de carga e vãos altos, com avaliação técnica, instalação sob medida e atendimento em São Paulo.',
+    intro: 'Galpões e depósitos têm vãos maiores, circulação de pessoas, estruturas metálicas, mezaninos, áreas de carga e pontos altos que exigem avaliação técnica antes da instalação.',
+    image: '/images/rede-galpao.png', imageAlt: 'Rede de proteção instalada em porta-paletes de galpão',
+    applications: ['Galpões comerciais', 'Depósitos e estoques', 'Mezaninos industriais', 'Áreas de carga e descarga'],
+    checks: ['Altura e largura dos vãos', 'Tipo de estrutura disponível', 'Circulação de pessoas e equipamentos', 'Necessidade de acesso para manutenção'],
+    faq: [
+      { question: 'Rede de proteção pode ser usada em galpões?', answer: 'Sim. A aplicação depende da estrutura, do tipo de vão, da altura, da circulação no local e dos pontos seguros para fixação. Por isso a avaliação técnica é indispensável.' },
+      { question: 'Serve para proteger mezaninos e vãos internos?', answer: 'Pode servir para reduzir riscos em mezaninos, passarelas, guarda-corpos, laterais de escadas e aberturas internas, sempre com instalação sob medida.' },
+      { question: 'Como pedir orçamento para um galpão?', answer: 'Envie fotos amplas, vídeos curtos, medidas aproximadas, endereço do local e explique o objetivo da proteção. Projetos maiores podem exigir visita técnica.' },
+      { question: 'A instalação atrapalha a operação do galpão?', answer: 'O planejamento considera horários, acesso, equipamentos e circulação para reduzir interferências na rotina do local.' },
+    ],
+  },
+  {
+    slug: 'rede-de-protecao-para-beach-tennis', name: 'Rede de proteção para quadra de beach tennis', shortName: 'Beach tennis', title: 'Rede de proteção para quadra de beach tennis',
+    description: 'Rede de proteção para quadras de beach tennis, áreas esportivas e laterais de contenção, com avaliação de altura, perímetro e pontos de fixação.',
+    intro: 'Quadras de beach tennis precisam de redes resistentes nas laterais e fundos para conter bolas, organizar a circulação e proteger áreas próximas sem prejudicar o uso da quadra.',
+    image: '/images/rede-beach-tennis.png', imageAlt: 'Bola de beach tennis vista através de uma rede de proteção',
+    applications: ['Quadras de beach tennis', 'Áreas esportivas em condomínios', 'Laterais e fundos de quadra', 'Espaços recreativos e clubes'],
+    checks: ['Altura necessária para contenção de bolas', 'Perímetro e acesso da quadra', 'Tipo de poste, muro ou estrutura disponível', 'Exposição ao sol, vento e maresia'],
+    faq: [
+      { question: 'A rede para beach tennis é feita sob medida?', answer: 'Sim. A instalação considera o tamanho da quadra, altura desejada, pontos de fixação e circulação ao redor do espaço.' },
+      { question: 'Serve para condomínios e clubes?', answer: 'Sim. A solução pode ser avaliada para condomínios, clubes, escolas, academias e áreas recreativas com quadras de areia.' },
+      { question: 'Qual altura a rede deve ter?', answer: 'A altura depende do objetivo da contenção, da distância para áreas vizinhas e da estrutura disponível. A equipe avalia fotos, medidas e rotina de uso antes de orientar.' },
+      { question: 'Como pedir orçamento para uma quadra?', answer: 'Envie fotos amplas da quadra, medidas aproximadas do perímetro, altura desejada e informe se já existem postes, muros ou pontos de fixação.' },
+    ],
+  },
 ];
 
 export const getTopicPath = (topic: ServiceTopic) => `/servicos/${topic.slug}`;

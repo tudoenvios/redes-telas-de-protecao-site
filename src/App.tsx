@@ -11,6 +11,7 @@ import ServiceTopicPage from './components/ServiceTopicPage';
 import ProtectionPillarPage from './components/ProtectionPillarPage';
 import CondoRankingGuidePage from './components/CondoRankingGuidePage';
 import CatsApartmentGuidePage from './components/CatsApartmentGuidePage';
+import WarehouseProtectionPage from './components/WarehouseProtectionPage';
 import { findServiceArea } from './data/serviceAreas';
 import { findServiceTopic } from './data/serviceTopics';
 
@@ -21,6 +22,10 @@ export default function App() {
 
   if (serviceArea) {
     return <LocalLandingPage area={serviceArea} />;
+  }
+
+  if (pathname === '/servicos/rede-de-protecao-para-galpoes') {
+    return <WarehouseProtectionPage />;
   }
 
   if (serviceTopic) {
