@@ -54,6 +54,11 @@ const priorityProfiles = {
     description: 'Rede de proteção em Pinheiros para apartamentos, janelas, sacadas, gatos e crianças. Instalação sob medida e orçamento rápido pelo WhatsApp.',
     nearbyAreas: ['Vila Madalena', 'Jardins', 'Butantã', 'Itaim Bibi'],
   },
+  brooklin: {
+    title: 'Rede de Proteção no Brooklin | Janelas, Sacadas e Pets',
+    description: 'Rede de proteção no Brooklin para apartamentos, janelas, sacadas, crianças e pets. Atendimento técnico em condomínios e orçamento pelo WhatsApp.',
+    nearbyAreas: ['Campo Belo', 'Moema', 'Itaim Bibi', 'Santo Amaro'],
+  },
 };
 const regions = new Set(['ABC Paulista', 'Alphaville', 'Granja Viana']);
 const pages = [
@@ -153,6 +158,10 @@ for (const slug of serviceTopicSlugs) {
   const output = join('dist', 'servicos', slug, 'index.html');
   mkdirSync(dirname(output), { recursive: true });
   writeFileSync(output, html);
+
+  const shortOutput = join('dist', slug, 'index.html');
+  mkdirSync(dirname(shortOutput), { recursive: true });
+  writeFileSync(shortOutput, html);
 }
 
 for (const slug of guideSlugs) {

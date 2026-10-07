@@ -17,7 +17,7 @@ const slugify = (name: string) =>
 const districtNames = [
   'Água Rasa', 'Alto de Pinheiros', 'Anhanguera', 'Aricanduva', 'Artur Alvim',
   'Barra Funda', 'Bela Vista', 'Belém', 'Bom Retiro', 'Brás', 'Brasilândia',
-  'Butantã', 'Cachoeirinha', 'Cambuci', 'Campo Belo', 'Campo Grande', 'Campo Limpo',
+  'Brooklin', 'Butantã', 'Cachoeirinha', 'Cambuci', 'Campo Belo', 'Campo Grande', 'Campo Limpo',
   'Cangaíba', 'Capão Redondo', 'Carrão', 'Casa Verde', 'Cidade Ademar',
   'Cidade Dutra', 'Cidade Líder', 'Cidade Tiradentes', 'Consolação', 'Cursino',
   'Ermelino Matarazzo', 'Freguesia do Ó', 'Grajaú', 'Guaianases', 'Iguatemi',
@@ -63,7 +63,7 @@ const districtZones: Record<string, string[]> = {
     'Campo Belo', 'Campo Grande', 'Campo Limpo', 'Capão Redondo', 'Cidade Ademar',
     'Cidade Dutra', 'Cursino', 'Grajaú', 'Ipiranga', 'Jabaquara', 'Jardim Ângela',
     'Jardim São Luís', 'Marsilac', 'Moema', 'Parelheiros', 'Pedreira', 'Sacomã',
-    'Santo Amaro', 'Saúde', 'Socorro', 'Vila Andrade', 'Vila Mariana',
+    'Brooklin', 'Santo Amaro', 'Saúde', 'Socorro', 'Vila Andrade', 'Vila Mariana',
   ],
 };
 

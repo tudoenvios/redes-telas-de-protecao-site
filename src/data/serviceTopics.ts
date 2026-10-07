@@ -135,4 +135,7 @@ export const serviceTopics: ServiceTopic[] = [
 ];
 
 export const getTopicPath = (topic: ServiceTopic) => `/servicos/${topic.slug}`;
-export const findServiceTopic = (pathname: string) => serviceTopics.find((topic) => getTopicPath(topic) === pathname.replace(/\/$/, ''));
+export const findServiceTopic = (pathname: string) => {
+  const normalized = pathname.replace(/\/$/, '');
+  return serviceTopics.find((topic) => getTopicPath(topic) === normalized || `/${topic.slug}` === normalized);
+};
