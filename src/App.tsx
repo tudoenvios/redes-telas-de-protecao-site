@@ -13,6 +13,7 @@ import CondoRankingGuidePage from './components/CondoRankingGuidePage';
 import CatsApartmentGuidePage from './components/CatsApartmentGuidePage';
 import WarehouseProtectionPage from './components/WarehouseProtectionPage';
 import AntiBirdProtectionPage from './components/AntiBirdProtectionPage';
+import BlogPage from './components/BlogPage';
 import { findServiceArea } from './data/serviceAreas';
 import { findServiceTopic } from './data/serviceTopics';
 
@@ -31,6 +32,10 @@ export default function App() {
 
   if (pathname === '/servicos/rede-anti-passaro') {
     return <AntiBirdProtectionPage />;
+  }
+
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) {
+    return <BlogPage />;
   }
 
   if (serviceTopic) {

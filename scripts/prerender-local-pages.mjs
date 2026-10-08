@@ -1,6 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { coastalNeighborhoods, districtNames, guideSlugs, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
+import { blogSlugs, coastalNeighborhoods, districtNames, guideSlugs, regionalNames, root, serviceTopicSlugs, slugify } from './generate-sitemap.mjs';
 
 const template = readFileSync('dist/index.html', 'utf8');
 const priorityProfiles = {
@@ -90,6 +90,12 @@ const guidePages = {
     title: 'Como proteger gatos em apartamento | Janelas e sacadas seguras',
     description: 'Guia para proteger gatos em apartamento com redes em janelas, sacadas, areas de servico e basculantes. Veja cuidados antes de instalar e como pedir orcamento.',
   },
+};
+
+const blogArticles = JSON.parse(readFileSync('src/data/blogArticles.json', 'utf8')).articles;
+const blogIndexPage = {
+  title: 'Blog Rede & Proteção | Guias de redes de proteção',
+  description: 'Guias para planejar redes de proteção em janelas, sacadas, apartamentos, ambientes com gatos e pedidos de orçamento.',
 };
 
 for (const page of pages) {
@@ -183,6 +189,52 @@ for (const slug of guideSlugs) {
   writeFileSync(output, html);
 }
 
+const renderStaticPage = (path, title, description, schemaId, schema) => {
+  const canonicalPath = path.endsWith('/') ? path : `${path}/`;
+  const canonical = `${root}${canonicalPath}`;
+  const html = template
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+    .replace(/<meta name="title" content="[^"]*"\s*\/>/, `<meta name="title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${escapeHtml(description)}" />`)
+    .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
+    .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
+    .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${escapeHtml(description)}" />`)
+    .replace(/<meta name="twitter:title" content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${escapeHtml(title)}" />`)
+    .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${escapeHtml(description)}" />`)
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script id="${schemaId}" type="application/ld+json">${JSON.stringify(schema)}</script>`);
+  const output = join('dist', path.replace(/^\/|\/$/g, ''), 'index.html');
+  mkdirSync(dirname(output), { recursive: true });
+  writeFileSync(output, html);
+};
+
+renderStaticPage('/blog/', blogIndexPage.title, blogIndexPage.description, 'static-blog-schema', {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: blogIndexPage.title,
+  description: blogIndexPage.description,
+  url: `${root}/blog/`,
+  inLanguage: 'pt-BR',
+  publisher: { '@type': 'Organization', name: 'Rede & Proteção' },
+});
+
+for (const slug of blogSlugs) {
+  const article = blogArticles.find((item) => item.slug === slug);
+  if (!article) continue;
+  const canonical = `${root}/blog/${article.slug}/`;
+  renderStaticPage(`/blog/${article.slug}/`, `${article.title} | Rede & Proteção`, article.description, 'static-blog-article-schema', {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'Article', headline: article.title, description: article.description, inLanguage: 'pt-BR', author: { '@type': 'Organization', name: 'Rede & Proteção' }, publisher: { '@type': 'Organization', name: 'Rede & Proteção' }, mainEntityOfPage: canonical },
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Início', item: `${root}/` },
+        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${root}/blog/` },
+        { '@type': 'ListItem', position: 3, name: article.title, item: canonical },
+      ] },
+    ],
+  });
+}
+
 const centralPages = [{
   path: '/rede-de-protecao',
   title: 'Rede de Proteção em São Paulo | Instalação Sob Medida',
@@ -209,4 +261,4 @@ for (const page of centralPages) {
   writeFileSync(output, html);
 }
 
-console.log(`Generated ${pages.length} local SEO entry pages, ${serviceTopicSlugs.length} service pages, ${guideSlugs.length} guide page and ${centralPages.length} central page.`);
+console.log(`Generated ${pages.length} local SEO entry pages, ${serviceTopicSlugs.length} service pages, ${guideSlugs.length} guide page, ${blogSlugs.length + 1} blog pages and ${centralPages.length} central page.`);

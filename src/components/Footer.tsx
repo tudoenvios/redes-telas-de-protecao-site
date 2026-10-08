@@ -81,6 +81,14 @@ export default function Footer({ onScrollTo }: FooterProps) {
                 </button>
               </li>
               <li>
+                <a
+                  href="/blog/"
+                  className="hover:text-sky-400 transition-colors"
+                >
+                  Blog e guias de proteção
+                </a>
+              </li>
+              <li>
                 <button
                   type="button"
                   onClick={() => onScrollTo('orcamento-gratuito')}

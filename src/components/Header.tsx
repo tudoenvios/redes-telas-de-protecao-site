@@ -102,6 +102,9 @@ export default function Header({ onScrollTo }: HeaderProps) {
                 {item.label}
               </button>
             ))}
+            <a href="/blog/" className="text-sm font-medium text-zinc-600 hover:text-sky-700 transition-colors">
+              Blog
+            </a>
           </nav>
 
           {/* Botões de Ação */}
@@ -149,6 +152,9 @@ export default function Header({ onScrollTo }: HeaderProps) {
                 {item.label}
               </button>
             ))}
+            <a href="/blog/" className="px-3 py-2 rounded-md text-sm font-medium text-zinc-700 hover:bg-zinc-100">
+              Blog
+            </a>
           </div>
           <div className="pt-3 border-t border-zinc-100 flex flex-col gap-2">
             <a
