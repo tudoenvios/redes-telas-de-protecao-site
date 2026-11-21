@@ -13,22 +13,18 @@ export default function BannerShowcase({ onOpenAdvisor: _onOpenAdvisor }: Banner
   return (
     <div className="w-full max-w-4xl mx-auto">
       <div className="relative rounded-2xl overflow-hidden shadow-2xl border-2 border-sky-900/20 bg-zinc-950">
-        <picture>
-          <source
-            media="(max-width: 768px)"
-            srcSet="/images/banner-protecao-apartamento-mobile.jpg"
-          />
-          <img
-            src="/images/banner-protecao-apartamento.jpg"
-            alt="Rede de Proteção para Apartamento - Janelas e Sacadas - Rede & Proteção®"
-            width="1254"
-            height="1254"
-            fetchPriority="high"
-            loading="eager"
-            decoding="async"
-            className="block h-auto w-full object-contain"
-          />
-        </picture>
+        <img
+          src="/images/banner-protecao-apartamento.jpg"
+          srcSet="/images/banner-protecao-apartamento-mobile.jpg 720w, /images/banner-protecao-apartamento.jpg 1254w"
+          sizes="(max-width: 768px) 100vw, 896px"
+          alt="Rede de Proteção para Apartamento - Janelas e Sacadas - Rede & Proteção®"
+          width="1254"
+          height="1254"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          className="block h-auto w-full object-contain"
+        />
 
         <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6">
           <a

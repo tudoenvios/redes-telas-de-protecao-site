@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ShieldCheck, Phone, MessageCircle, Menu, X } from 'lucide-react';
 import { CONTACT_INFO } from '../data/protectionData';
 
@@ -8,6 +8,7 @@ interface HeaderProps {
 
 export default function Header({ onScrollTo }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const mobileMenuToggle = useRef<HTMLButtonElement>(null);
 
   const navItems = [
     { label: 'Aplicações', id: 'aplicacoes' },
@@ -20,11 +21,6 @@ export default function Header({ onScrollTo }: HeaderProps) {
   const handleNavClick = (id: string) => {
     onScrollTo(id);
     setMobileMenuOpen(false);
-  };
-
-  const goHome = () => {
-    if (window.location.pathname === '/') onScrollTo('hero');
-    else window.location.href = '/';
   };
 
   const whatsappUrl =
@@ -54,9 +50,9 @@ export default function Header({ onScrollTo }: HeaderProps) {
         <div className="flex items-center justify-between h-18">
           <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             {/* Logotipo */}
-            <div
+            <a
               id="site-logo"
-              onClick={goHome}
+              href="/"
               className="flex min-w-0 items-center gap-2 sm:gap-3 cursor-pointer group"
             >
               <div className="w-9 h-9 sm:w-10 sm:h-10 shrink-0 rounded-xl bg-sky-600 text-white flex items-center justify-center shadow-sm group-hover:bg-sky-700 transition-colors">
@@ -70,7 +66,7 @@ export default function Header({ onScrollTo }: HeaderProps) {
                   Redes & Telas de Proteção
                 </span>
               </div>
-            </div>
+            </a>
 
             <div className="flex shrink-0 items-center gap-1.5">
               <a
@@ -133,10 +129,13 @@ export default function Header({ onScrollTo }: HeaderProps) {
           {/* Botão menu Mobile */}
           <button
             id="mobile-menu-toggle"
+            ref={mobileMenuToggle}
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-lg text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-            aria-label="Abrir menu de navegação"
+            aria-label={mobileMenuOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -144,32 +143,41 @@ export default function Header({ onScrollTo }: HeaderProps) {
       </div>
 
       {/* Menu gaveta mobile */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-5 space-y-3">
-          <div className="flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <button key={item.id} id={`mobile-nav-${item.id}`} onClick={() => handleNavClick(item.id!)} className="text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-700 hover:bg-zinc-100">
-                {item.label}
-              </button>
-            ))}
-            <a href="/blog/" className="px-3 py-2 rounded-md text-sm font-medium text-zinc-700 hover:bg-zinc-100">
-              Blog
-            </a>
-          </div>
-          <div className="pt-3 border-t border-zinc-100 flex flex-col gap-2">
-            <a
-              id="mobile-whatsapp-btn"
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold bg-emerald-600 text-white"
-            >
-              <MessageCircle className="w-4 h-4" />
-              Chamar no WhatsApp
-            </a>
-          </div>
+      <nav
+        id="mobile-navigation"
+        aria-label="Navegação móvel"
+        hidden={!mobileMenuOpen}
+        className="lg:hidden border-t border-zinc-200 bg-white px-4 pt-3 pb-5 space-y-3"
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') {
+            setMobileMenuOpen(false);
+            mobileMenuToggle.current?.focus();
+          }
+        }}
+      >
+        <div className="flex flex-col space-y-2">
+          {navItems.map((item) => (
+            <button key={item.id} id={`mobile-nav-${item.id}`} onClick={() => handleNavClick(item.id!)} className="text-left px-3 py-2 rounded-md text-sm font-medium text-zinc-700 hover:bg-zinc-100">
+              {item.label}
+            </button>
+          ))}
+          <a href="/blog/" className="px-3 py-2 rounded-md text-sm font-medium text-zinc-700 hover:bg-zinc-100">
+            Blog
+          </a>
         </div>
-      )}
+        <div className="pt-3 border-t border-zinc-100 flex flex-col gap-2">
+          <a
+            id="mobile-whatsapp-btn"
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold bg-emerald-600 text-white"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Chamar no WhatsApp
+          </a>
+        </div>
+      </nav>
     </header>
   );
 }

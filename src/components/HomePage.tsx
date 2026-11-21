@@ -20,7 +20,8 @@ const DeferredSection = ({ children }: { children: React.ReactNode }) => (
 
 export default function HomePage() {
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? 'instant' : 'smooth' });
   };
 
   const handleOpenWhatsapp = (customMsg?: string) => {
@@ -36,8 +37,14 @@ export default function HomePage() {
   return (
     <ImageProvider>
       <div id="site-root" className="min-h-screen flex flex-col bg-zinc-50 text-zinc-900 font-sans antialiased">
+        <a
+          href="#conteudo-principal"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-3 focus:font-semibold focus:text-sky-900"
+        >
+          Pular para o conteúdo principal
+        </a>
         <Header onScrollTo={scrollToSection} />
-        <main className="flex-1">
+        <main id="conteudo-principal" tabIndex={-1} className="flex-1">
           <Hero
             onOpenAdvisor={() => scrollToSection('orcamento-gratuito')}
             onOpenWhatsapp={() => handleOpenWhatsapp()}
